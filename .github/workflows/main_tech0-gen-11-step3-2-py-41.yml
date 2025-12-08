@@ -56,6 +56,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-app
+          
+      - name: Create CA Certificate File from Secret
+        run: echo "${{ secrets.DB_CA_CERTIFICATE }}" > DigiCertGlobalRootG2.crt.pem
+        shell: bash
+
       
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -63,4 +68,5 @@ jobs:
         with:
           app-name: 'tech0-gen-11-step3-2-py-41'
           slot-name: 'Production'
+
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_09FE53877FC841F0B1A356AC3B6B4773 }}
